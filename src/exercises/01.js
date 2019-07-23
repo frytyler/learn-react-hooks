@@ -2,13 +2,15 @@
 
 import React from 'react'
 
-function Counter() {
+function Counter({step = 1, initialCount = 0}) {
+  const [count, setCount] = React.useState(initialCount)
   // 🐨 use React.useState here
+  const increment = () => setCount(currentCount => currentCount + step)
   // 🐨 create an increment function that calls the state updater you get from
   //    React.useState to increment the count
   // 🐨 render the count you get from React.useState inside the button and use
   //    your increment function as the onClick handler.
-  return <button />
+  return <button onClick={increment}>{count}</button>
 }
 
 ////////////////////////////////////////////////////////////////////
