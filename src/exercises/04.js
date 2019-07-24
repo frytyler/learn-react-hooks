@@ -2,20 +2,26 @@
 
 import React from 'react'
 
-function Board() {
+function Board({squareCount = 9}) {
   // 🐨 Use React.useState for the `squares` state you need
   // 💰 To create an empty array with 9 slots, you can use: `Array(9).fill(null)`
-
+  const [squares, setSquares] = React.useState(Array(squareCount).fill(null))
   // 🐨 create your derived state variable here for the nextValue
   // 💰 call it "nextValue" and get it by calling calculateWhoIsNext with the squares
-
+  const nextValue = calculateWhoIsNext(squares)
   // 🐨 create your derived state variable here for the winner
   // 💰 call it "winner" and get it by calling calculateWinner with the squares
+  const winner = calculateWinner(squares)
 
   // This is the function your square click handler will call. `square` should
   // be an index. So if they click the center square, this will be `5`.
   // eslint-disable-next-line no-unused-vars
   function selectSquare(square) {
+    if (winner || squares[square]) return
+
+    const squaresCopy = [...squares]
+    squaresCopy[square] = nextValue
+    setSquares(squaresCopy)
     // 🐨 first, if there's already winner or there's already a value at the
     // given square index (like someone clicked a square that's already been
     // clicked), then return early so we don't make any state changes
@@ -28,27 +34,46 @@ function Board() {
     // 🐨 set the squares to your copy
   }
 
-  // Here we'll determine the status we'll display at the top of the board.
-  // We can have the following statuses:
-  // `Winner: ${winner}`
-  // `Scratch: Cat's game` (💰 if every square in squares is truthy and there's no winner, then it's a scratch)
-  // `Next player: ${nextValue}`
-  //
-  // 🐨 assign a `status` variable to one of these, and render it above the
-  //    board in a div with the className "status"
-  //
-  // 🐨 return your JSX with this basic structure:
+  let status = `Next player: ${nextValue}`
+  if (winner) status = `Winner: ${winner}`
+  if (squares.every(Boolean)) status = `Scratch: Cat's game`
+
   return (
     <div>
-      <div className="status">{/* put the status here */}</div>
-      {/* you'll need 3 board-rows and each will have 3 squares */}
+      <div className="status">{status}</div>
       <div className="board-row">
         <button className="square" onClick={() => selectSquare(0)}>
-          {/* squares[0] */}
+          {squares[0]}
         </button>
-        {/* etc... */}
+        <button className="square" onClick={() => selectSquare(1)}>
+          {squares[1]}
+        </button>
+        <button className="square" onClick={() => selectSquare(2)}>
+          {squares[2]}
+        </button>
       </div>
-      {/* etc... */}
+      <div className="board-row">
+        <button className="square" onClick={() => selectSquare(3)}>
+          {squares[3]}
+        </button>
+        <button className="square" onClick={() => selectSquare(4)}>
+          {squares[4]}
+        </button>
+        <button className="square" onClick={() => selectSquare(5)}>
+          {squares[5]}
+        </button>
+      </div>
+      <div className="board-row">
+        <button className="square" onClick={() => selectSquare(6)}>
+          {squares[6]}
+        </button>
+        <button className="square" onClick={() => selectSquare(7)}>
+          {squares[7]}
+        </button>
+        <button className="square" onClick={() => selectSquare(8)}>
+          {squares[8]}
+        </button>
+      </div>
     </div>
   )
 }

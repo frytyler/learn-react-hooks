@@ -4,7 +4,7 @@ import React from 'react'
 // 🐨 Make a custom hook called useCounter that accepts the step and
 // initialCount and returns the count and increment functions
 
-function useCounter(step, initialCount) {
+function useCounter({step, initialCount}) {
   // 💣 remove this (or move it to your custom hook)
   const [count, setCount] = React.useState(initialCount)
   const increment = () => setCount(c => c + step)
@@ -13,7 +13,7 @@ function useCounter(step, initialCount) {
 }
 
 function Counter({step = 1, initialCount = 0}) {
-  const [count, increment] = useCounter(step, initialCount)
+  const [count, increment] = useCounter({step, initialCount})
   return <button onClick={increment}>{count}</button>
 }
 

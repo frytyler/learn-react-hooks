@@ -1,7 +1,7 @@
 import React from 'react'
 import {render, fireEvent} from '@testing-library/react'
-import Usage from '../exercises-final/03.extra-1'
-// import Usage from '../exercises/03'
+// import Usage from '../exercises-final/03.extra-1'
+import Usage from '../exercises/03'
 
 beforeAll(() => {
   jest.spyOn(Storage.prototype, 'getItem')

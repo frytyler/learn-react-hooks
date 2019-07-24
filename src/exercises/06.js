@@ -4,8 +4,23 @@ import React from 'react'
 import fetchPokemon from '../fetch-pokemon'
 
 function PokemonInfo({pokemonName}) {
-  // 🐨 Have state for the pokemon (null), the error state (null), and the
-  // loading state (false).
+  const [pokemon, setPokemon] = React.useState(null)
+  const [error, setError] = React.useState(null)
+  const [loading, setLoading] = React.useState(false)
+
+  React.useEffect(() => {
+    if (!pokemonName) return
+    setLoading(true)
+    setError(null)
+    setPokemon(null)
+    fetchPokemon(pokemonName).then(
+      p => {
+        setLoading(false)
+        setPokemon(p)
+      },
+      e => setError(e),
+    )
+  }, [pokemonName])
 
   // 🐨 use React.useEffect where the callback should be called whenever the
   // pokemon name changes.
@@ -29,13 +44,10 @@ function PokemonInfo({pokemonName}) {
         padding: 10,
       }}
     >
-      {/*
-        🐨 Render the appropriate content based on the state:
-            1. loading: '...'
-            2. error: 'ERROR!'
-            3. pokemon: the JSON.stringified pokemon in a <pre></pre>
-      */}
-      TODO
+      {loading && '...'}
+      {error && 'ERROR!'}
+      {pokemon && JSON.stringify(pokemon, null, 2)}
+      {!loading && !error && !pokemon && 'Submit'}
     </div>
   )
 }
